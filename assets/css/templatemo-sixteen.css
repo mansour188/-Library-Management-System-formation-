@@ -3,6 +3,19 @@
 TemplateMo 546 Sixteen Clothing
 
 https://templatemo.com/tm-546-sixteen-clothing
+ .hover-zoom {
+    transition: transform 0.3s ease;
+  }
+
+  /* Scale up the image on hover */
+  .hover-zoom:hover {
+    transform: scale(5);
+  }
+
+  /* Set a custom width for the image container */
+  .image-container {
+    width: 100%;
+  }
 
 */
 body {

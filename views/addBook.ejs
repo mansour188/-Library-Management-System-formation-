@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class=" row justify-content-center">
-    <form method="post" action="/addBook">
+    <form method="post" action="/addBook" enctype="multipart/form-data">
         <!-- Name input -->
         <div class="form-outline ">
           <input type="text" id="form4Example1" class="form-control"  name="title"/>
@@ -39,7 +39,21 @@
       
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">save</button>
+
+        <div>
+          <% if (succedMsg) { %>
+            <div class="alert alert-success" role="alert">
+              <%= succedMsg %>
+            </div>
+          <% } %>
+          <% if (failedMsg) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= failedMsg %>
+            </div>
+          <% } %>
+        </div>
       </form>
+     
     </div>
 </div>
 <%-include("parts/footer.ejs")%>

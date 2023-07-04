@@ -1,0 +1,63 @@
+<%-include("parts/top.ejs")%>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class=" row justify-content-center">
+    <form method="post" action="/myBooks/save" enctype="multipart/form-data">
+        <input type="hidden" id="form4Example1" class="form-control" value="<%=book._id%>"  name="oldId"/>
+        <!-- Name input -->
+        <div class="form-outline ">
+          <input type="text" id="form4Example1" class="form-control" value="<%=book.title%>"  name="title"/>
+          <label class="form-label" for="form4Example1">Title</label>
+        </div>
+      
+        <!-- Email input -->
+        <div class="form-outline ">
+          <input type="text" id="form4Example2" name="Author" value="<%=book.author %>" class="form-control" />
+          <label class="form-label" for="form4Example2">Author</label>
+        </div>
+      
+        <!-- Message input -->
+        <div class="form-outline ">
+          <textarea class="form-control" id="form4Example3" rows="4" name="description"><%=book.description %></textarea>
+          <label class="form-label" for="form4Example3">Description</label>
+        </div>
+        <div class="form-outline ">
+            <input type="number" id="form4Example2" name="price" value="<%=book.price %>" class="form-control" />
+            <label class="form-label" for="form4Example2">Price</label>
+          </div>
+          <div class="form-outline ">
+            <img  height="100 px" width="100 px" src="/upload/<%=book.img%>" alt="">
+            <input type="hidden" id="form4Example1" class="form-control" value="<%=book.img%>"  name="oldImg"/>
+            
+            <input type="file" id="form4Example2" value="" name="image" class="form-control" />
+            <label class="form-label" for="form4Example2">Image</label>
+          </div>
+      
+        <!-- Checkbox -->
+       
+      
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">update</button>
+
+        <div>
+            <% if (succedMsg) { %>
+              <div class="alert alert-success" role="alert">
+                <%= succedMsg %>
+              </div>
+            <% } %>
+            <% if (failedMsg) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= failedMsg %>
+              </div>
+            <% } %>
+          </div>
+      </form>
+     
+    </div>
+</div>
+<%-include("parts/footer.ejs")%>

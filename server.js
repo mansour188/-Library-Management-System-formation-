@@ -38,6 +38,7 @@ app.use(session({
 app.use("/",routerBook)
 app.use("/",routerHome)
 app.use("/",AuthRouter)
+app.use("/",routerBook)
 
 
 app.listen(3000,()=>{

@@ -25,10 +25,65 @@ exports.getDetails=(req,res)=>{
 
 }
 exports.addBook=(req,res)=>{
-   res.render("addBook",{verifUser:req.session.userId})
+   res.render("addBook",{verifUser:req.session.userId,succedMsg:req.flash("succedMsg")[0],failedMsg:req.flash("failedMsg")[0]})
 }
 exports.postBook=(req,res)=>{
-   console.log("book posted")
+
+
+ BookModel.addBook(req.body.title,req.body.Author,req.body.description,req.body.price,req.file.filename,req.session.userId)
+ .then((data)=>{
+   
+   req.flash("succedMsg",data)
+   res.redirect("/addBook")
+ }).catch((err)=>{
+   
+   req.flash("failedMsg",err)
+   res.redirect("/addBook")
+ })
+   
 }
+exports.getMyBook=(req,res)=>{
+   BookModel.getMyBook(req.session.userId).then((data)=>{
+      res.render("myBooks",{verifUser:req.session.userId,books:data})
+   })
 
+}
+exports.deleteBook=(req,res)=>{
+   BookModel.deleteBook(req.params.id).then((data)=>{
+      if(data){
+         res.redirect("/myBooks")
+      }
+   }).catch((err)=>{
+      res.redirect("/myBooks")
+   })
+}
+exports.updateBook=(req,res)=>{
+   BookModel.updateBook(req.params.id).then((Book)=>{
+      res.render("updateBook",{verifUser:req.session.userId,book:Book,succedMsg:req.flash("succedMsg")[0],failedMsg:req.flash("failedMsg")[0]})
+   })
 
+}
+exports.postupdateBook=(req,res)=>{
+   if(req.file){
+      BookModel.postUpdateBook(req.body.oldId,req.body.title,req.body.Author,req.body.description,req.body.price,req.file.filename,req.session.userId)
+      .then((data)=>{
+        
+        req.flash("succedMsg",data)
+        res.redirect(`/myBooks/update/${req.body.oldId}`)      }).catch((err)=>{
+        
+        req.flash("failedMsg",err)
+        res.redirect(`/myBooks/update/${req.body.oldId}`)      })
+   }else{
+      BookModel.postUpdateBook(req.body.oldId,req.body.title,req.body.Author,req.body.description,req.body.price,req.body.oldImg,req.session.userId)
+      .then((data)=>{
+        
+        req.flash("succedMsg",data)
+        res.redirect(`/myBooks/update/${req.body.oldId}`)
+      }).catch((err)=>{
+        console.log(err)
+        req.flash("failedMsg",err)
+        res.redirect(`/myBooks/update/${req.body.oldId}`)
+      })
+   }
+
+}
